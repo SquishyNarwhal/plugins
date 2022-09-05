@@ -19,14 +19,14 @@
 
 	return !window.hiddenchannelslib_Global || (!window.hiddenchannelslib_Global.loaded && !window.hiddenchannelslib_Global.started) ? class {
 //		constructor (meta) {for (let key in meta) this[key] = meta[key];}
-		getName () {return this.name;}
-		getAuthor () {return this.author;}
-		getVersion () {return this.version;}
-		getDescription () {return `The Library Plugin needed for ${this.name} is missing. Open the Plugin Settings to download it. \n\n${this.description}`;}
+		getName () {return config.info.name;}
+		getAuthor () {return config.info.author;}
+		getVersion () {return config.info.version;}
+		getDescription () {return `The Library Plugin needed for ${config.info.name} is missing. Open the Plugin Settings to download it. \n\n${config.info.description}`;}
 		
 		downloadLibrary () {
 			require("request").get("https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannels.plugin.js", (e, r, b) => {
-				if (!e && b && r.statusCode == 200) require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0hiddenchannelslib.plugin.js"), b, _ => BdApi.showToast("Finished downloading hiddenchannelslib Library", {type: "success"}));
+				if (!e && b && r.statusCode == 200) require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "hiddenchannelslib.plugin.js"), b, _ => BdApi.showToast("Finished downloading hiddenchannelslib Library", {type: "success"}));
 				else BdApi.alert("Error", "Could not download hiddenchannelslib Library Plugin. Try again later or download it manually from GitHub: https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannels.plugin.js");
 			});
 		}
@@ -35,7 +35,7 @@
 			if (!window.hiddenchannelslib_Global || !Array.isArray(window.hiddenchannelslib_Global.pluginQueue)) window.hiddenchannelslib_Global = Object.assign({}, window.hiddenchannelslib_Global, {pluginQueue: []});
 			if (!window.hiddenchannelslib_Global.downloadModal) {
 				window.hiddenchannelslib_Global.downloadModal = true;
-				BdApi.showConfirmationModal("Library Missing", `The Library Plugin needed for ${this.name} is missing. Please click "Download Now" to install it.`, {
+				BdApi.showConfirmationModal("Library Missing", `The Library Plugin needed for ${config.info.name} is missing. Please click "Download Now" to install it.`, {
 					confirmText: "Download Now",
 					cancelText: "Cancel",
 					onCancel: _ => {delete window.hiddenchannelslib_Global.downloadModal;},
@@ -45,13 +45,13 @@
 					}
 				});
 			}
-			if (!window.hiddenchannelslib_Global.pluginQueue.includes(this.name)) window.hiddenchannelslib_Global.pluginQueue.push(this.name);
+			if (!window.hiddenchannelslib_Global.pluginQueue.includes(config.info.name)) window.hiddenchannelslib_Global.pluginQueue.push(config.info.name);
 		}
 		start () {this.load();}
 		stop () {}
 		getSettingsPanel () {
 			let template = document.createElement("template");
-			template.innerHTML = `<div style="color: var(--header-primary); font-size: 16px; font-weight: 300; white-space: pre; line-height: 22px;">The Library Plugin needed for ${this.name} is missing.\nPlease click <a style="font-weight: 500;">Download Now</a> to install it.</div>`;
+			template.innerHTML = `<div style="color: var(--header-primary); font-size: 16px; font-weight: 300; white-space: pre; line-height: 22px;">The Library Plugin needed for ${config.info.name} is missing.\nPlease click <a style="font-weight: 500;">Download Now</a> to install it.</div>`;
 			template.content.firstElementChild.querySelector("a").addEventListener("click", this.downloadLibrary);
 			return template.content.firstElementChild;
 		}
