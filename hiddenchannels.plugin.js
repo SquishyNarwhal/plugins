@@ -1,5 +1,5 @@
 /**
- * @name ShowHiddenChannels
+ * @name hiddenchannels
  * @author DevilBro
  * @authorId 278543574059057154
  * @version 3.2.5
@@ -10,7 +10,7 @@
  module.exports = (_ => {
 	const config = {
 		"info": {
-			"name": "ShowHiddenChannels",
+			"name": "hiddenchannels",
 			"author": "DevilBro",
 			"version": "3.2.5",
 			"description": "Displays all hidden Channels, which can't be accessed due to Role Restrictions, this won't allow you to read them (impossible)"
@@ -164,7 +164,7 @@
 			}
 		};
 	
-		return class ShowHiddenChannels extends Plugin {
+		return class hiddenchannels extends Plugin {
 			onLoad () {
 				overrideTypes = Object.keys(hiddenchannelslib.DiscordConstants.PermissionOverrideType);
 				
@@ -204,7 +204,7 @@
 				};
 				
 				this.css = `
-					${hiddenchannelslib.dotCNS._showhiddenchannelsaccessmodal + hiddenchannelslib.dotCN.messagespopoutemptyplaceholder} {
+					${hiddenchannelslib.dotCNS._hiddenchannelsaccessmodal + hiddenchannelslib.dotCN.messagespopoutemptyplaceholder} {
 						position: absolute;
 						bottom: 0;
 						width: 100%;
@@ -415,7 +415,7 @@
 			
 			processChannelItem (e) {
 				if (e.instance.props.channel && this.isChannelHidden(e.instance.props.channel.id)) {
-					if (!e.returnvalue) e.instance.props.className = hiddenchannelslib.DOMUtils.formatClassName(e.instance.props.className, hiddenchannelslib.disCN._showhiddenchannelshiddenchannel);
+					if (!e.returnvalue) e.instance.props.className = hiddenchannelslib.DOMUtils.formatClassName(e.instance.props.className, hiddenchannelslib.disCN._hiddenchannelshiddenchannel);
 					else {
 						let [children, index] = hiddenchannelslib.ReactUtils.findParent(e.returnvalue, {name: "ChannelItemIcon"});
 						let channelChildren = hiddenchannelslib.ReactUtils.findChild(e.returnvalue, {props: [["className", hiddenchannelslib.disCN.channelchildren]]});
@@ -568,7 +568,7 @@
 					size: "MEDIUM",
 					header: hiddenchannelslib.LanguageUtils.LanguageStrings.CHANNEL + " " + hiddenchannelslib.LanguageUtils.LanguageStrings.ACCESSIBILITY,
 					subHeader: "#" + channel.name,
-					className: hiddenchannelslib.disCN._showhiddenchannelsaccessmodal,
+					className: hiddenchannelslib.disCN._hiddenchannelsaccessmodal,
 					contentClassName: hiddenchannelslib.DOMUtils.formatClassName(!isThread && hiddenchannelslib.disCN.listscroller),
 					onOpen: modalInstance => {if (modalInstance) accessModal = modalInstance;},
 					children: isThread ? infoStrings : [
