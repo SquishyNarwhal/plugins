@@ -8196,71 +8196,46 @@
 						}}, {once: true});
 					};
 
-					const hiddenchannelslib_Patrons = Object.assign({}, InternalData.hiddenchannelslib_Patrons), hiddenchannelslib_Patron_Tiers = Object.assign({}, InternalData.hiddenchannelslib_Patron_Tiers);
 					Internal._processAvatarRender = function (user, avatar, wrapper, className) {
-						if (hiddenchannelslib.ReactUtils.isValidElement(avatar) && hiddenchannelslib.ObjectUtils.is(user) && (avatar.props.className || "").indexOf(hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar) == -1) {
-							let role = "", note = "", color, link, addBadge = Internal.settings.general.showSupportBadges;
-							if (hiddenchannelslib_Patrons[user.id] && hiddenchannelslib_Patrons[user.id].active) {
-								link = "https://www.patreon.com/MircoWittrien";
-								role = hiddenchannelslib_Patrons[user.id].text || (hiddenchannelslib_Patron_Tiers[hiddenchannelslib_Patrons[user.id].tier] || {}).text;
-								note = hiddenchannelslib_Patrons[user.id].text && (hiddenchannelslib_Patron_Tiers[hiddenchannelslib_Patrons[user.id].tier] || {}).text;
-								color = hiddenchannelslib_Patrons[user.id].color;
-								className = hiddenchannelslib.DOMUtils.formatClassName(avatar.props.className, className, addBadge && hiddenchannelslib.disCN.hiddenchannelslibhasbadge, hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar, hiddenchannelslib.disCN.hiddenchannelslibsupporter, hiddenchannelslib.disCN[`hiddenchannelslibsupporter${hiddenchannelslib_Patrons[user.id].tier}`]);
-							}
-							else if (user.id == InternalData.myId) {
-								addBadge = true;
-								role = `Theme ${hiddenchannelslib.LanguageUtils.LibraryStrings.developer}`;
-								className = hiddenchannelslib.DOMUtils.formatClassName(avatar.props.className, className, hiddenchannelslib.disCN.hiddenchannelslibhasbadge, hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar, hiddenchannelslib.disCN.hiddenchannelslibdev);
-							}
-							if (role) {
-								if (avatar.type == "img") avatar = hiddenchannelslib.ReactUtils.createElement(Internal.LibraryComponents.AvatarComponents.default, Object.assign({}, avatar.props, {
-									size: Internal.LibraryComponents.AvatarComponents.Sizes.SIZE_40
-								}));
-								delete avatar.props.className;
-								let newProps = {
-									className: className,
-									children: [avatar]
-								};
-								avatar = hiddenchannelslib.ReactUtils.createElement("div", newProps);
-								if (addBadge) avatar.props.children.push(hiddenchannelslib.ReactUtils.createElement(Internal.LibraryComponents.TooltipContainer, {
-									text: role,
-									note: note,
-									tooltipConfig: {backgroundColor: color || ""},
-									onClick: link ? (_ => hiddenchannelslib.DiscordUtils.openLink(link)) : (_ => {}),
-									children: hiddenchannelslib.ReactUtils.createElement("div", {
-										className: hiddenchannelslib.disCN.hiddenchannelslibbadge,
-										"user-id": user.id
-									})
-								}));
-								return avatar;
-							}
-						}
+//						if (hiddenchannelslib.ReactUtils.isValidElement(avatar) && hiddenchannelslib.ObjectUtils.is(user) && (avatar.props.className || "").indexOf(hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar) == -1) {
+//							let role = "", note = "", color, link, addBadge = Internal.settings.general.showSupportBadges;
+//							if (role) {
+//								if (avatar.type == "img") avatar = hiddenchannelslib.ReactUtils.createElement(Internal.LibraryComponents.AvatarComponents.default, Object.assign({}, avatar.props, {
+//									size: Internal.LibraryComponents.AvatarComponents.Sizes.SIZE_40
+//								}));
+//								delete avatar.props.className;
+//								let newProps = {
+//									className: className,
+//									children: [avatar]
+//								};
+//								avatar = hiddenchannelslib.ReactUtils.createElement("div", newProps);
+//								if (addBadge) avatar.props.children.push(hiddenchannelslib.ReactUtils.createElement(Internal.LibraryComponents.TooltipContainer, {
+//									text: role,
+//									note: note,
+//									tooltipConfig: {backgroundColor: color || ""},
+//									onClick: link ? (_ => hiddenchannelslib.DiscordUtils.openLink(link)) : (_ => {}),
+//									children: hiddenchannelslib.ReactUtils.createElement("div", {
+//										className: hiddenchannelslib.disCN.hiddenchannelslibbadge,
+//										"user-id": user.id
+//									})
+//								}));
+//								return avatar;
+//							}
+//						}
 					};
 					Internal._processAvatarMount = function (user, avatar, wrapper) {
 						if (!user) return;
-						if (Node.prototype.isPrototypeOf(avatar) && (avatar.className || "").indexOf(hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar) == -1) {
-							let role = "", note = "", color, link, addBadge = Internal.settings.general.showSupportBadges;
-							if (hiddenchannelslib_Patrons[user.id] && hiddenchannelslib_Patrons[user.id].active) {
-								link = "https://www.patreon.com/MircoWittrien";
-								role = hiddenchannelslib_Patrons[user.id].text || (hiddenchannelslib_Patron_Tiers[hiddenchannelslib_Patrons[user.id].tier] || {}).text;
-								note = hiddenchannelslib_Patrons[user.id].text && (hiddenchannelslib_Patron_Tiers[hiddenchannelslib_Patrons[user.id].tier] || {}).text;
-								color = hiddenchannelslib_Patrons[user.id].color;
-								avatar.className = hiddenchannelslib.DOMUtils.formatClassName(avatar.className, addBadge && hiddenchannelslib.disCN.hiddenchannelslibhasbadge, hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar, hiddenchannelslib.disCN.hiddenchannelslibsupporter, hiddenchannelslib.disCN[`hiddenchannelslibsupporter${hiddenchannelslib_Patrons[user.id].tier}`]);
-							}
-							else if (user.id == InternalData.myId) {
-								addBadge = true;
-								role = `Theme ${hiddenchannelslib.LanguageUtils.LibraryStrings.developer}`;
-								avatar.className = hiddenchannelslib.DOMUtils.formatClassName(avatar.className, addBadge && hiddenchannelslib.disCN.hiddenchannelslibhasbadge, hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar, hiddenchannelslib.disCN.hiddenchannelslibdev);
-							}
-							if (addBadge && role && !avatar.querySelector(hiddenchannelslib.dotCN.hiddenchannelslibbadge)) {
-								let badge = document.createElement("div");
-								badge.className = hiddenchannelslib.disCN.hiddenchannelslibbadge;
-								badge.setAttribute("user-id", user.id);
-								if (link) badge.addEventListener("click", _ => hiddenchannelslib.DiscordUtils.openLink(link));
-								badge.addEventListener("mouseenter", _ => hiddenchannelslib.TooltipUtils.create(badge, role, {position: "top", note: note, backgroundColor: color || ""}));
-								avatar.appendChild(badge);
-							}
-						}
+//						if (Node.prototype.isPrototypeOf(avatar) && (avatar.className || "").indexOf(hiddenchannelslib.disCN.hiddenchannelslibbadgeavatar) == -1) {
+//							let role = "", note = "", color, link, addBadge = Internal.settings.general.showSupportBadges;
+//							if (addBadge && role && !avatar.querySelector(hiddenchannelslib.dotCN.hiddenchannelslibbadge)) {
+//								let badge = document.createElement("div");
+//								badge.className = hiddenchannelslib.disCN.hiddenchannelslibbadge;
+//								badge.setAttribute("user-id", user.id);
+//								if (link) badge.addEventListener("click", _ => hiddenchannelslib.DiscordUtils.openLink(link));
+//								badge.addEventListener("mouseenter", _ => hiddenchannelslib.TooltipUtils.create(badge, role, {position: "top", note: note, backgroundColor: color || ""}));
+//								avatar.appendChild(badge);
+//							}
+//						}
 					};
 					Internal.processAccount = function (e) {
 						Internal._processAvatarMount(e.instance.props.currentUser, e.node.querySelector(hiddenchannelslib.dotCN.avatarwrapper), e.node);
