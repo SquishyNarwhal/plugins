@@ -1,2 +1,3 @@
 # plugins
-hi
+discord
+ok
