@@ -892,5 +892,5 @@
 				}
 			}
 		};
-	})(window.hiddenchannelslib_Global.PluginUtils.buildPlugin(changeLog));
+	})(window.hiddenchannelslib_Global.PluginUtils.buildPlugin(config));
 })();
