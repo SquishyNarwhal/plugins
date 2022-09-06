@@ -25,9 +25,9 @@
 		getDescription () {return `The Library Plugin needed for ${config.info.name} is missing. Open the Plugin Settings to download it. \n\n${config.info.description}`;}
 		
 		downloadLibrary () {
-			require("request").get("https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannels.plugin.js", (e, r, b) => {
+			require("request").get("https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannelslib.plugin.js", (e, r, b) => {
 				if (!e && b && r.statusCode == 200) require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "hiddenchannelslib.plugin.js"), b, _ => BdApi.showToast("Finished downloading hiddenchannelslib Library", {type: "success"}));
-				else BdApi.alert("Error", "Could not download hiddenchannelslib Library Plugin. Try again later or download it manually from GitHub: https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannels.plugin.js");
+				else BdApi.alert("Error", "Could not download hiddenchannelslib Library Plugin. Try again later or download it manually from GitHub: https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannelslib.plugin.js");
 			});
 		}
 		
