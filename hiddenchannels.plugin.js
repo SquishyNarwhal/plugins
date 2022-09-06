@@ -2,7 +2,7 @@
  * @name hiddenchannels
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 3.2.5
+ * @version 9.9.9
  * @description Displays all hidden Channels, which can't be accessed due to Role Restrictions, this won't allow you to read them (impossible)
  * @invite Jx3TjNS
  */
