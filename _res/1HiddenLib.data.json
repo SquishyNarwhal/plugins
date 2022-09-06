@@ -1,7 +1,7 @@
 {
 	"PluginNameMap": {},
 	"PluginUrlMap": {
-		"BDFDB": "https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannelslib.plugin.js"
+		"BDFDB": "https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/1HiddenLib.plugin.js"
 	},
 	"LibraryRequires": ["electron", "fs", "path", "process", "request"],
 	"DiscordObjects": {
@@ -1095,7 +1095,7 @@
 			"connections": "connections-pPr4as",
 			"verifiedBadge": "verifiedBadge-mH2YpO"
 		},
-		"hiddenchannels": {
+		"ShowHiddenChannels": {
 			"accessModal": "accessModal-w5HjsV",
 			"hiddenChannel": "hidden-9f2Dsa"
 		},
@@ -1597,8 +1597,8 @@
 		"_showconnectionsconnections": ["ShowConnections", "connections"],
 		"_showconnectionsicon": ["ShowConnections", "connectionIcon"],
 		"_showconnectionsverifiedbadge": ["ShowConnections", "verifiedBadge"],
-		"_hiddenchannelsaccessmodal": ["hiddenchannels", "accessModal"],
-		"_hiddenchannelshiddenchannel": ["hiddenchannels", "hiddenChannel"],
+		"_showhiddenchannelsaccessmodal": ["ShowHiddenChannels", "accessModal"],
+		"_showhiddenchannelshiddenchannel": ["ShowHiddenChannels", "hiddenChannel"],
 		"_spellcheckerror": ["SpellCheck", "error"],
 		"_spellcheckoverlay": ["SpellCheck", "overlay"],
 		"_spotifycontrolsactivitybutton": ["SpotifyControls", "activityButton"],

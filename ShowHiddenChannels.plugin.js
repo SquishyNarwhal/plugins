@@ -1,5 +1,5 @@
 /**
- * @name hiddenchannels
+ * @name ShowHiddenChannels
  * @author DevilBro
  * @authorId 278543574059057154
  * @version 9.9.9
@@ -7,45 +7,44 @@
  * @invite Jx3TjNS
  */
 
- module.exports = (_ => {
+module.exports = (_ => {
 	const config = {
 		"info": {
-			"name": "hiddenchannels",
+			"name": "ShowHiddenChannels",
 			"author": "DevilBro",
 			"version": "3.2.5",
 			"description": "Displays all hidden Channels, which can't be accessed due to Role Restrictions, this won't allow you to read them (impossible)"
 		}
 	};
 
-	return !window.hiddenchannelslib_Global || (!window.hiddenchannelslib_Global.loaded && !window.hiddenchannelslib_Global.started) ? class {
-//		constructor (meta) {for (let key in meta) this[key] = meta[key];}
+	return !window.ok_HiddenLib_Global || (!window.ok_HiddenLib_Global.loaded && !window.ok_HiddenLib_Global.started) ? class {
 		getName () {return config.info.name;}
 		getAuthor () {return config.info.author;}
 		getVersion () {return config.info.version;}
 		getDescription () {return `The Library Plugin needed for ${config.info.name} is missing. Open the Plugin Settings to download it. \n\n${config.info.description}`;}
 		
 		downloadLibrary () {
-			require("request").get("https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannelslib.plugin.js", (e, r, b) => {
-				if (!e && b && r.statusCode == 200) require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "hiddenchannelslib.plugin.js"), b, _ => BdApi.showToast("Finished downloading hiddenchannelslib Library", {type: "success"}));
-				else BdApi.alert("Error", "Could not download hiddenchannelslib Library Plugin. Try again later or download it manually from GitHub: https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/hiddenchannelslib.plugin.js");
+			require("request").get("https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/1HiddenLib.plugin.js", (e, r, b) => {
+				if (!e && b && r.statusCode == 200) require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "1HiddenLib.plugin.js"), b, _ => BdApi.showToast("Finished downloading ok_HiddenLib Library", {type: "success"}));
+				else BdApi.alert("Error", "Could not download ok_HiddenLib Library Plugin. Try again later or download it manually from GitHub: https://raw.githubusercontent.com/SquishyNarwhal/plugins/main/1HiddenLib.plugin.js");
 			});
 		}
 		
 		load () {
-			if (!window.hiddenchannelslib_Global || !Array.isArray(window.hiddenchannelslib_Global.pluginQueue)) window.hiddenchannelslib_Global = Object.assign({}, window.hiddenchannelslib_Global, {pluginQueue: []});
-			if (!window.hiddenchannelslib_Global.downloadModal) {
-				window.hiddenchannelslib_Global.downloadModal = true;
+			if (!window.ok_HiddenLib_Global || !Array.isArray(window.ok_HiddenLib_Global.pluginQueue)) window.ok_HiddenLib_Global = Object.assign({}, window.ok_HiddenLib_Global, {pluginQueue: []});
+			if (!window.ok_HiddenLib_Global.downloadModal) {
+				window.ok_HiddenLib_Global.downloadModal = true;
 				BdApi.showConfirmationModal("Library Missing", `The Library Plugin needed for ${config.info.name} is missing. Please click "Download Now" to install it.`, {
 					confirmText: "Download Now",
 					cancelText: "Cancel",
-					onCancel: _ => {delete window.hiddenchannelslib_Global.downloadModal;},
+					onCancel: _ => {delete window.ok_HiddenLib_Global.downloadModal;},
 					onConfirm: _ => {
-						delete window.hiddenchannelslib_Global.downloadModal;
+						delete window.ok_HiddenLib_Global.downloadModal;
 						this.downloadLibrary();
 					}
 				});
 			}
-			if (!window.hiddenchannelslib_Global.pluginQueue.includes(config.info.name)) window.hiddenchannelslib_Global.pluginQueue.push(config.info.name);
+			if (!window.ok_HiddenLib_Global.pluginQueue.includes(config.info.name)) window.ok_HiddenLib_Global.pluginQueue.push(config.info.name);
 		}
 		start () {this.load();}
 		stop () {}
@@ -55,7 +54,7 @@
 			template.content.firstElementChild.querySelector("a").addEventListener("click", this.downloadLibrary);
 			return template.content.firstElementChild;
 		}
-	} : (([Plugin, hiddenchannelslib]) => {
+	} : (([Plugin, ok_HiddenLib]) => {
 		var blackList = [], overrideTypes = [];
 		var hiddenChannelCache = {};
 		var accessModal;
@@ -95,41 +94,41 @@
 			componentDidMount() {
 				if (this.props.user.fetchable) {
 					this.props.user.fetchable = false;
-					hiddenchannelslib.LibraryModules.UserProfileUtils.getUser(this.props.user.id).then(fetchedUser => {
-						this.props.user = Object.assign({}, fetchedUser, hiddenchannelslib.LibraryModules.MemberStore.getMember(this.props.guildId, this.props.user.id) || {});
-						hiddenchannelslib.ReactUtils.forceUpdate(this);
+					ok_HiddenLib.LibraryModules.UserProfileUtils.getUser(this.props.user.id).then(fetchedUser => {
+						this.props.user = Object.assign({}, fetchedUser, ok_HiddenLib.LibraryModules.MemberStore.getMember(this.props.guildId, this.props.user.id) || {});
+						ok_HiddenLib.ReactUtils.forceUpdate(this);
 					});
 				}
 			}
 			render() {
-				return hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.ListRow, {
-					prefix: hiddenchannelslib.ReactUtils.createElement("div", {
-						className: hiddenchannelslib.disCN.listavatar,
-						children: hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.AvatarComponents.default, {
-							src: hiddenchannelslib.UserUtils.getAvatar(this.props.user.id),
-							status: hiddenchannelslib.UserUtils.getStatus(this.props.user.id),
-							size: hiddenchannelslib.LibraryComponents.AvatarComponents.Sizes.SIZE_40,
+				return ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.ListRow, {
+					prefix: ok_HiddenLib.ReactUtils.createElement("div", {
+						className: ok_HiddenLib.disCN.listavatar,
+						children: ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.AvatarComponents.default, {
+							src: ok_HiddenLib.UserUtils.getAvatar(this.props.user.id),
+							status: ok_HiddenLib.UserUtils.getStatus(this.props.user.id),
+							size: ok_HiddenLib.LibraryComponents.AvatarComponents.Sizes.SIZE_40,
 							onClick: _ => {
 								if (accessModal) accessModal.props.onClose();
-								hiddenchannelslib.LibraryModules.UserProfileModalUtils.openUserProfileModal({
+								ok_HiddenLib.LibraryModules.UserProfileModalUtils.openUserProfileModal({
 									userId: this.props.user.id,
 									guildId: this.props.guildId
 								});
 							}
 						})
 					}),
-					labelClassName: hiddenchannelslib.disCN.nametag,
+					labelClassName: ok_HiddenLib.disCN.nametag,
 					label: [
-						hiddenchannelslib.ReactUtils.createElement("span", {
-							className: hiddenchannelslib.disCN.username,
+						ok_HiddenLib.ReactUtils.createElement("span", {
+							className: ok_HiddenLib.disCN.username,
 							children: this.props.user.nick || this.props.user.username,
 							style: {color: this.props.user.colorString}
 						}),
-						!this.props.user.discriminator ? null : hiddenchannelslib.ReactUtils.createElement("span", {
-							className: hiddenchannelslib.disCN.listdiscriminator,
+						!this.props.user.discriminator ? null : ok_HiddenLib.ReactUtils.createElement("span", {
+							className: ok_HiddenLib.disCN.listdiscriminator,
 							children: `#${this.props.user.discriminator}`
 						}),
-						this.props.user.bot && hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.BotTag, {
+						this.props.user.bot && ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.BotTag, {
 							style: {marginLeft: 6}
 						})
 					]
@@ -139,24 +138,24 @@
 		
 		const RoleRowComponent = class RoleRow extends BdApi.React.Component {
 			render() {
-				return hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.ListRow, {
-					prefix: hiddenchannelslib.ReactUtils.createElement("div", {
-						className: hiddenchannelslib.disCNS.avataricon + hiddenchannelslib.disCNS.listavatar + hiddenchannelslib.disCNS.avatariconsizemedium + hiddenchannelslib.disCN.avatariconinactive,
+				return ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.ListRow, {
+					prefix: ok_HiddenLib.ReactUtils.createElement("div", {
+						className: ok_HiddenLib.disCNS.avataricon + ok_HiddenLib.disCNS.listavatar + ok_HiddenLib.disCNS.avatariconsizemedium + ok_HiddenLib.disCN.avatariconinactive,
 						style: {
 							boxSizing: "border-box",
 							padding: 10
 						},
-						children: hiddenchannelslib.ReactUtils.createElement("div", {
+						children: ok_HiddenLib.ReactUtils.createElement("div", {
 							style: {
 								borderRadius: "50%",
 								height: "100%",
 								width: "100%",
-								backgroundColor: hiddenchannelslib.ColorUtils.convert(this.props.role.colorString, "RGB") || hiddenchannelslib.DiscordConstants.Colors.PRIMARY_DARK_300
+								backgroundColor: ok_HiddenLib.ColorUtils.convert(this.props.role.colorString, "RGB") || ok_HiddenLib.DiscordConstants.Colors.PRIMARY_DARK_300
 							}
 						})
 					}),
-					labelClassName: this.props.role.overwritten && hiddenchannelslib.disCN.strikethrough,
-					label: hiddenchannelslib.ReactUtils.createElement("span", {
+					labelClassName: this.props.role.overwritten && ok_HiddenLib.disCN.strikethrough,
+					label: ok_HiddenLib.ReactUtils.createElement("span", {
 						children: this.props.role.name,
 						style: {color: this.props.role.colorString}
 					})
@@ -164,9 +163,9 @@
 			}
 		};
 	
-		return class hiddenchannels extends Plugin {
+		return class ShowHiddenChannels extends Plugin {
 			onLoad () {
-				overrideTypes = Object.keys(hiddenchannelslib.DiscordConstants.PermissionOverrideType);
+				overrideTypes = Object.keys(ok_HiddenLib.DiscordConstants.PermissionOverrideType);
 				
 				this.defaults = {
 					sortOrder: {
@@ -204,7 +203,7 @@
 				};
 				
 				this.css = `
-					${hiddenchannelslib.dotCNS._hiddenchannelsaccessmodal + hiddenchannelslib.dotCN.messagespopoutemptyplaceholder} {
+					${ok_HiddenLib.dotCNS._showhiddenchannelsaccessmodal + ok_HiddenLib.dotCN.messagespopoutemptyplaceholder} {
 						position: absolute;
 						bottom: 0;
 						width: 100%;
@@ -215,16 +214,16 @@
 			onStart () {
 				this.saveBlackList(this.getBlackList());
 				
-				hiddenchannelslib.PatchUtils.patch(this, hiddenchannelslib.LibraryModules.GuildUtils, "setChannel", {instead: e => {
-					let channelId = (hiddenchannelslib.LibraryModules.VoiceUtils.getVoiceStateForUser(e.methodArguments[1]) || {}).channelId;
+				ok_HiddenLib.PatchUtils.patch(this, ok_HiddenLib.LibraryModules.GuildUtils, "setChannel", {instead: e => {
+					let channelId = (ok_HiddenLib.LibraryModules.VoiceUtils.getVoiceStateForUser(e.methodArguments[1]) || {}).channelId;
 					if (!channelId || !this.isChannelHidden(channelId)) return e.callOriginalMethod();
 				}});
 				
-				hiddenchannelslib.PatchUtils.patch(this, hiddenchannelslib.LibraryModules.UnreadChannelUtils, "hasUnread", {after: e => {
+				ok_HiddenLib.PatchUtils.patch(this, ok_HiddenLib.LibraryModules.UnreadChannelUtils, "hasUnread", {after: e => {
 					return e.returnValue && !this.isChannelHidden(e.methodArguments[0]);
 				}});
 				
-				hiddenchannelslib.PatchUtils.patch(this, hiddenchannelslib.LibraryModules.UnreadChannelUtils, "getMentionCount", {after: e => {
+				ok_HiddenLib.PatchUtils.patch(this, ok_HiddenLib.LibraryModules.UnreadChannelUtils, "getMentionCount", {after: e => {
 					return e.returnValue ? (this.isChannelHidden(e.methodArguments[0]) ? 0 : e.returnValue) : e.returnValue;
 				}});
 
@@ -237,17 +236,17 @@
 
 			getSettingsPanel (collapseStates = {}) {
 				let settingsPanel;
-				return settingsPanel = hiddenchannelslib.PluginUtils.createSettingsPanel(this, {
+				return settingsPanel = ok_HiddenLib.PluginUtils.createSettingsPanel(this, {
 					collapseStates: collapseStates,
 					children: _ => {
 						let settingsItems = [];
 				
 						for (let key in this.defaults.selections) settingsItems.push();
 						
-						settingsItems.push(hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.CollapseContainer, {
+						settingsItems.push(ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.CollapseContainer, {
 							title: "Settings",
 							collapseStates: collapseStates,
-							children: Object.keys(this.defaults.sortOrder).map(key => hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsSaveItem, {
+							children: Object.keys(this.defaults.sortOrder).map(key => ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsSaveItem, {
 								type: "Select",
 								plugin: this,
 								keys: ["sortOrder", key],
@@ -255,46 +254,46 @@
 								basis: "50%",
 								options: this.defaults.sortOrder[key].options,
 								value: this.settings.sortOrder[key]
-							})).concat(Object.keys(this.defaults.general).map(key => hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsSaveItem, {
+							})).concat(Object.keys(this.defaults.general).map(key => ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsSaveItem, {
 								type: "Switch",
 								plugin: this,
 								keys: ["general", key],
 								label: this.defaults.general[key].description,
 								value: this.settings.general[key]
-							}))).concat(hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsPanelList, {
+							}))).concat(ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsPanelList, {
 								title: "Show Channels:",
-								children: Object.keys(this.defaults.channels).map(key => hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsSaveItem, {
+								children: Object.keys(this.defaults.channels).map(key => ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsSaveItem, {
 									type: "Switch",
 									plugin: this,
 									keys: ["channels", key],
-									label: hiddenchannelslib.LanguageUtils.LanguageStrings[typeNameMap[key]],
+									label: ok_HiddenLib.LanguageUtils.LanguageStrings[typeNameMap[key]],
 									value: this.settings.channels[key]
 								}))
 							}))
 						}));
 						
-						settingsItems.push(hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.CollapseContainer, {
+						settingsItems.push(ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.CollapseContainer, {
 							title: "Server Black List",
 							collapseStates: collapseStates,
 							children: [
-								hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsGuildList, {
-									className: hiddenchannelslib.disCN.marginbottom20,
+								ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsGuildList, {
+									className: ok_HiddenLib.disCN.marginbottom20,
 									disabled: blackList,
 									onClick: disabledGuilds => this.saveBlackList(disabledGuilds)
 								}),
-								hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsItem, {
+								ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsItem, {
 									type: "Button",
-									color: hiddenchannelslib.LibraryComponents.Button.Colors.GREEN,
+									color: ok_HiddenLib.LibraryComponents.Button.Colors.GREEN,
 									label: "Enable for all Servers",
 									onClick: _ => this.batchSetGuilds(settingsPanel, collapseStates, true),
-									children: hiddenchannelslib.LanguageUtils.LanguageStrings.ENABLE
+									children: ok_HiddenLib.LanguageUtils.LanguageStrings.ENABLE
 								}),
-								hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SettingsItem, {
+								ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SettingsItem, {
 									type: "Button",
-									color: hiddenchannelslib.LibraryComponents.Button.Colors.PRIMARY,
+									color: ok_HiddenLib.LibraryComponents.Button.Colors.PRIMARY,
 									label: "Disable for all Servers",
 									onClick: _ => this.batchSetGuilds(settingsPanel, collapseStates, false),
-									children: hiddenchannelslib.LanguageUtils.LanguageStrings.DISABLE
+									children: ok_HiddenLib.LanguageUtils.LanguageStrings.DISABLE
 								})
 							]
 						}));
@@ -314,13 +313,13 @@
 			forceUpdateAll () {				
 				hiddenChannelCache = {};
 
-				hiddenchannelslib.PatchUtils.forceAllUpdates(this);
-				hiddenchannelslib.ChannelUtils.rerenderAll();
+				ok_HiddenLib.PatchUtils.forceAllUpdates(this);
+				ok_HiddenLib.ChannelUtils.rerenderAll();
 			}
 		
 			onUserContextMenu (e) {
 				if (e.subType == "useUserManagementItems" || e.subType == "useMoveUserVoiceItems" || e.subType == "usePreviewVideoItem") {
-					let channelId = (hiddenchannelslib.LibraryModules.VoiceUtils.getVoiceStateForUser(e.instance.props.user.id) || {}).channelId;
+					let channelId = (ok_HiddenLib.LibraryModules.VoiceUtils.getVoiceStateForUser(e.instance.props.user.id) || {}).channelId;
 					if (channelId && this.isChannelHidden(channelId)) return null;
 				}
 			}
@@ -329,10 +328,10 @@
 				if (e.instance.props.channel && e.instance.props.channel.guild_id && e.subType == "useChannelMarkAsReadItem") {
 					let isHidden = this.isChannelHidden(e.instance.props.channel.id);
 					if (isHidden || this.settings.general.showForNormal) {
-						if (e.returnvalue.length) e.returnvalue.push(hiddenchannelslib.ContextMenuUtils.createItem(hiddenchannelslib.LibraryComponents.MenuItems.MenuSeparator, {}));
-						e.returnvalue.push(hiddenchannelslib.ContextMenuUtils.createItem(hiddenchannelslib.LibraryComponents.MenuItems.MenuItem, {
+						if (e.returnvalue.length) e.returnvalue.push(ok_HiddenLib.ContextMenuUtils.createItem(ok_HiddenLib.LibraryComponents.MenuItems.MenuSeparator, {}));
+						e.returnvalue.push(ok_HiddenLib.ContextMenuUtils.createItem(ok_HiddenLib.LibraryComponents.MenuItems.MenuItem, {
 							label: this.labels.context_channelaccess,
-							id: hiddenchannelslib.ContextMenuUtils.createItemId(this.name, "permissions"),
+							id: ok_HiddenLib.ContextMenuUtils.createItemId(this.name, "permissions"),
 							action: _ => this.openAccessModal(e.instance.props.channel, !isHidden)
 						}));
 					}
@@ -341,18 +340,18 @@
 			
 			onGuildContextMenu (e) {
 				if (e.instance.props.guild) {
-					let [children, index] = hiddenchannelslib.ContextMenuUtils.findItem(e.returnvalue, {id: "hide-muted-channels"});
-					if (index > -1) children.splice(index + 1, 0, hiddenchannelslib.ContextMenuUtils.createItem(hiddenchannelslib.LibraryComponents.MenuItems.MenuCheckboxItem, {
+					let [children, index] = ok_HiddenLib.ContextMenuUtils.findItem(e.returnvalue, {id: "hide-muted-channels"});
+					if (index > -1) children.splice(index + 1, 0, ok_HiddenLib.ContextMenuUtils.createItem(ok_HiddenLib.LibraryComponents.MenuItems.MenuCheckboxItem, {
 						label: this.labels.context_hidehidden,
-						id: hiddenchannelslib.ContextMenuUtils.createItemId(this.name, "hide-locked-channels"),
+						id: ok_HiddenLib.ContextMenuUtils.createItemId(this.name, "hide-locked-channels"),
 						checked: blackList.includes(e.instance.props.guild.id),
 						action: value => {
 							if (value) blackList.push(e.instance.props.guild.id);
-							else hiddenchannelslib.ArrayUtils.remove(blackList, e.instance.props.guild.id, true);
-							this.saveBlackList(hiddenchannelslib.ArrayUtils.removeCopies(blackList));
+							else ok_HiddenLib.ArrayUtils.remove(blackList, e.instance.props.guild.id, true);
+							this.saveBlackList(ok_HiddenLib.ArrayUtils.removeCopies(blackList));
 
-							hiddenchannelslib.PatchUtils.forceAllUpdates(this);
-							hiddenchannelslib.ChannelUtils.rerenderAll(true);
+							ok_HiddenLib.PatchUtils.forceAllUpdates(this);
+							ok_HiddenLib.ChannelUtils.rerenderAll(true);
 						}
 					}));
 				}
@@ -374,10 +373,10 @@
 				hiddenChannelCache[e.instance.props.guild.id] = [];
 				let processCategory = (category, insertChannelless) => {
 					if (!category) return;
-					let channelArray = hiddenchannelslib.ObjectUtils.toArray(category.channels);
+					let channelArray = ok_HiddenLib.ObjectUtils.toArray(category.channels);
 					if (channelArray.length) {
 						for (let n of channelArray) if ((n.renderLevel == renderLevels.CAN_NOT_SHOW || n._hidden) && e.instance.props.selectedVoiceChannelId != n.record.id) {
-							if (show && (this.settings.channels[hiddenchannelslib.DiscordConstants.ChannelTypes[n.record.type]] || this.settings.channels[hiddenchannelslib.DiscordConstants.ChannelTypes[n.record.type]] === undefined)) {
+							if (show && (this.settings.channels[ok_HiddenLib.DiscordConstants.ChannelTypes[n.record.type]] || this.settings.channels[ok_HiddenLib.DiscordConstants.ChannelTypes[n.record.type]] === undefined)) {
 								n._hidden = true;
 								if (e.instance.props.guildChannels.hideMutedChannels && e.instance.props.guildChannels.mutedChannelIds.has(n.record.id)) n.renderLevel = renderLevels.DO_NOT_SHOW;
 								else if (category.isCollapsed) n.renderLevel = renderLevels.WOULD_SHOW_IF_UNCOLLAPSED;
@@ -398,7 +397,7 @@
 					}
 					else if (insertChannelless && !category.shouldShowEmptyCategory()) {
 						let shouldShowEmptyCategory = category.shouldShowEmptyCategory;
-						category.shouldShowEmptyCategory = hiddenchannelslib.TimeUtils.suppress((...args) => {
+						category.shouldShowEmptyCategory = ok_HiddenLib.TimeUtils.suppress((...args) => {
 							if (!this.started) {
 								category.shouldShowEmptyCategory = shouldShowEmptyCategory;
 								return false;
@@ -415,32 +414,32 @@
 			
 			processChannelItem (e) {
 				if (e.instance.props.channel && this.isChannelHidden(e.instance.props.channel.id)) {
-					if (!e.returnvalue) e.instance.props.className = hiddenchannelslib.DOMUtils.formatClassName(e.instance.props.className, hiddenchannelslib.disCN._hiddenchannelshiddenchannel);
+					if (!e.returnvalue) e.instance.props.className = ok_HiddenLib.DOMUtils.formatClassName(e.instance.props.className, ok_HiddenLib.disCN._showhiddenchannelshiddenchannel);
 					else {
-						let [children, index] = hiddenchannelslib.ReactUtils.findParent(e.returnvalue, {name: "ChannelItemIcon"});
-						let channelChildren = hiddenchannelslib.ReactUtils.findChild(e.returnvalue, {props: [["className", hiddenchannelslib.disCN.channelchildren]]});
+						let [children, index] = ok_HiddenLib.ReactUtils.findParent(e.returnvalue, {name: "ChannelItemIcon"});
+						let channelChildren = ok_HiddenLib.ReactUtils.findChild(e.returnvalue, {props: [["className", ok_HiddenLib.disCN.channelchildren]]});
 						if (channelChildren && channelChildren.props && channelChildren.props.children) {
-							channelChildren.props.children = [hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.TooltipContainer, {
-								text: hiddenchannelslib.LanguageUtils.LanguageStrings.CHANNEL_LOCKED_SHORT,
-								children: hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.Clickable, {
-									className: hiddenchannelslib.disCN.channeliconitem,
+							channelChildren.props.children = [ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.TooltipContainer, {
+								text: ok_HiddenLib.LanguageUtils.LanguageStrings.CHANNEL_LOCKED_SHORT,
+								children: ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.Clickable, {
+									className: ok_HiddenLib.disCN.channeliconitem,
 									style: {display: "block"},
-									children: hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.SvgIcon, {
-										className: hiddenchannelslib.disCN.channelactionicon,
-										name: hiddenchannelslib.LibraryComponents.SvgIcon.Names.LOCK_CLOSED
+									children: ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.SvgIcon, {
+										className: ok_HiddenLib.disCN.channelactionicon,
+										name: ok_HiddenLib.LibraryComponents.SvgIcon.Names.LOCK_CLOSED
 									})
 								})
 							})];
 						}
-						if (!(e.instance.props.channel.type == hiddenchannelslib.DiscordConstants.ChannelTypes.GUILD_VOICE && e.instance.props.connected)) {
-							let wrapper = hiddenchannelslib.ReactUtils.findChild(e.returnvalue, {props: [["className", hiddenchannelslib.disCN.channelwrapper]]});
+						if (!(e.instance.props.channel.type == ok_HiddenLib.DiscordConstants.ChannelTypes.GUILD_VOICE && e.instance.props.connected)) {
+							let wrapper = ok_HiddenLib.ReactUtils.findChild(e.returnvalue, {props: [["className", ok_HiddenLib.disCN.channelwrapper]]});
 							if (wrapper) {
-								wrapper.props.onMouseDown = event => hiddenchannelslib.ListenerUtils.stopEvent(event);
-								wrapper.props.onMouseUp = event => hiddenchannelslib.ListenerUtils.stopEvent(event);
+								wrapper.props.onMouseDown = event => ok_HiddenLib.ListenerUtils.stopEvent(event);
+								wrapper.props.onMouseUp = event => ok_HiddenLib.ListenerUtils.stopEvent(event);
 							}
-							let mainContent = hiddenchannelslib.ReactUtils.findChild(e.returnvalue, {props: [["className", hiddenchannelslib.disCN.channelmaincontent]]});
+							let mainContent = ok_HiddenLib.ReactUtils.findChild(e.returnvalue, {props: [["className", ok_HiddenLib.disCN.channelmaincontent]]});
 							if (mainContent) {
-								mainContent.props.onClick = event => hiddenchannelslib.ListenerUtils.stopEvent(event);
+								mainContent.props.onClick = event => ok_HiddenLib.ListenerUtils.stopEvent(event);
 								mainContent.props.href = null;
 							}
 						}
@@ -453,143 +452,143 @@
 			}
 			
 			isChannelHidden (channelId) {
-				let channel = hiddenchannelslib.LibraryModules.ChannelStore.getChannel(channelId);
+				let channel = ok_HiddenLib.LibraryModules.ChannelStore.getChannel(channelId);
 				if (!channel || !channel.guild_id) return false;
 				return hiddenChannelCache[channel.guild_id] && hiddenChannelCache[channel.guild_id].indexOf(channelId) > -1;
 			}
 			
 			batchSetGuilds (settingsPanel, collapseStates, value) {
 				if (!value) {
-					for (let id of hiddenchannelslib.LibraryModules.FolderStore.getFlattenedGuildIds()) blackList.push(id);
-					this.saveBlackList(hiddenchannelslib.ArrayUtils.removeCopies(blackList));
+					for (let id of ok_HiddenLib.LibraryModules.FolderStore.getFlattenedGuildIds()) blackList.push(id);
+					this.saveBlackList(ok_HiddenLib.ArrayUtils.removeCopies(blackList));
 				}
 				else this.saveBlackList([]);
-				hiddenchannelslib.PluginUtils.refreshSettingsPanel(this, settingsPanel, collapseStates);
+				ok_HiddenLib.PluginUtils.refreshSettingsPanel(this, settingsPanel, collapseStates);
 			}
 
 			getBlackList () {
-				let loadedBlackList = hiddenchannelslib.DataUtils.load(this, "blacklist");
-				return !hiddenchannelslib.ArrayUtils.is(loadedBlackList) ? [] : loadedBlackList;
+				let loadedBlackList = ok_HiddenLib.DataUtils.load(this, "blacklist");
+				return !ok_HiddenLib.ArrayUtils.is(loadedBlackList) ? [] : loadedBlackList;
 			
 			}
 			
 			saveBlackList (savedBlackList) {
 				blackList = savedBlackList;
-				hiddenchannelslib.DataUtils.save(savedBlackList, this, "blacklist");
+				ok_HiddenLib.DataUtils.save(savedBlackList, this, "blacklist");
 			}
 			
 			openAccessModal (channel, allowed) {
-				let isThread = hiddenchannelslib.ChannelUtils.isThread(channel);
-				let guild = hiddenchannelslib.LibraryModules.GuildStore.getGuild(channel.guild_id);
-				let myMember = guild && hiddenchannelslib.LibraryModules.MemberStore.getMember(guild.id, hiddenchannelslib.UserUtils.me.id);
+				let isThread = ok_HiddenLib.ChannelUtils.isThread(channel);
+				let guild = ok_HiddenLib.LibraryModules.GuildStore.getGuild(channel.guild_id);
+				let myMember = guild && ok_HiddenLib.LibraryModules.MemberStore.getMember(guild.id, ok_HiddenLib.UserUtils.me.id);
 				
-				let parentChannel = isThread && hiddenchannelslib.LibraryModules.ChannelStore.getChannel(hiddenchannelslib.LibraryModules.ChannelStore.getChannel(channel.id).parent_id);
-				let category = parentChannel && parentChannel.parent_id && hiddenchannelslib.LibraryModules.ChannelStore.getChannel(parentChannel.parent_id) || hiddenchannelslib.LibraryModules.ChannelStore.getChannel(hiddenchannelslib.LibraryModules.ChannelStore.getChannel(channel.id).parent_id);
+				let parentChannel = isThread && ok_HiddenLib.LibraryModules.ChannelStore.getChannel(ok_HiddenLib.LibraryModules.ChannelStore.getChannel(channel.id).parent_id);
+				let category = parentChannel && parentChannel.parent_id && ok_HiddenLib.LibraryModules.ChannelStore.getChannel(parentChannel.parent_id) || ok_HiddenLib.LibraryModules.ChannelStore.getChannel(ok_HiddenLib.LibraryModules.ChannelStore.getChannel(channel.id).parent_id);
 				
-				let lightTheme = hiddenchannelslib.DiscordUtils.getTheme() == hiddenchannelslib.disCN.themelight;
+				let lightTheme = ok_HiddenLib.DiscordUtils.getTheme() == ok_HiddenLib.disCN.themelight;
 				
 				let addUser = (id, users) => {
-					let user = hiddenchannelslib.LibraryModules.UserStore.getUser(id);
-					if (user) users.push(Object.assign({}, user, hiddenchannelslib.LibraryModules.MemberStore.getMember(guild.id, id) || {}));
+					let user = ok_HiddenLib.LibraryModules.UserStore.getUser(id);
+					if (user) users.push(Object.assign({}, user, ok_HiddenLib.LibraryModules.MemberStore.getMember(guild.id, id) || {}));
 					else users.push({id: id, username: `UserId: ${id}`, fetchable: true});
 				};
 				let checkAllowPerm = permString => {
-					return (permString | hiddenchannelslib.DiscordConstants.Permissions.VIEW_CHANNEL) == permString && (channel.type != hiddenchannelslib.DiscordConstants.ChannelTypes.GUILD_VOICE || (permString | hiddenchannelslib.DiscordConstants.Permissions.CONNECT) == permString);
+					return (permString | ok_HiddenLib.DiscordConstants.Permissions.VIEW_CHANNEL) == permString && (channel.type != ok_HiddenLib.DiscordConstants.ChannelTypes.GUILD_VOICE || (permString | ok_HiddenLib.DiscordConstants.Permissions.CONNECT) == permString);
 				};
 				let checkDenyPerm = permString => {
-					return (permString | hiddenchannelslib.DiscordConstants.Permissions.VIEW_CHANNEL) == permString || (channel.type == hiddenchannelslib.DiscordConstants.ChannelTypes.GUILD_VOICE && (permString | hiddenchannelslib.DiscordConstants.Permissions.CONNECT) == permString);
+					return (permString | ok_HiddenLib.DiscordConstants.Permissions.VIEW_CHANNEL) == permString || (channel.type == ok_HiddenLib.DiscordConstants.ChannelTypes.GUILD_VOICE && (permString | ok_HiddenLib.DiscordConstants.Permissions.CONNECT) == permString);
 				};
 				
 				let allowedRoles = [], allowedUsers = [], deniedRoles = [], deniedUsers = [], everyoneDenied = false;
 				for (let id in channel.permissionOverwrites) {
-					if ((channel.permissionOverwrites[id].type == hiddenchannelslib.DiscordConstants.PermissionOverrideType.ROLE || overrideTypes[channel.permissionOverwrites[id].type] == hiddenchannelslib.DiscordConstants.PermissionOverrideType.ROLE) && (guild.roles[id] && guild.roles[id].name != "@everyone") && checkAllowPerm(channel.permissionOverwrites[id].allow)) {
+					if ((channel.permissionOverwrites[id].type == ok_HiddenLib.DiscordConstants.PermissionOverrideType.ROLE || overrideTypes[channel.permissionOverwrites[id].type] == ok_HiddenLib.DiscordConstants.PermissionOverrideType.ROLE) && (guild.roles[id] && guild.roles[id].name != "@everyone") && checkAllowPerm(channel.permissionOverwrites[id].allow)) {
 						allowedRoles.push(Object.assign({overwritten: myMember && myMember.roles.includes(id) && !allowed}, guild.roles[id]));
 					}
-					else if ((channel.permissionOverwrites[id].type == hiddenchannelslib.DiscordConstants.PermissionOverrideType.MEMBER || overrideTypes[channel.permissionOverwrites[id].type] == hiddenchannelslib.DiscordConstants.PermissionOverrideType.MEMBER) && checkAllowPerm(channel.permissionOverwrites[id].allow)) {
+					else if ((channel.permissionOverwrites[id].type == ok_HiddenLib.DiscordConstants.PermissionOverrideType.MEMBER || overrideTypes[channel.permissionOverwrites[id].type] == ok_HiddenLib.DiscordConstants.PermissionOverrideType.MEMBER) && checkAllowPerm(channel.permissionOverwrites[id].allow)) {
 						addUser(id, allowedUsers);
 					}
-					if ((channel.permissionOverwrites[id].type == hiddenchannelslib.DiscordConstants.PermissionOverrideType.ROLE || overrideTypes[channel.permissionOverwrites[id].type] == hiddenchannelslib.DiscordConstants.PermissionOverrideType.ROLE) && checkDenyPerm(channel.permissionOverwrites[id].deny)) {
+					if ((channel.permissionOverwrites[id].type == ok_HiddenLib.DiscordConstants.PermissionOverrideType.ROLE || overrideTypes[channel.permissionOverwrites[id].type] == ok_HiddenLib.DiscordConstants.PermissionOverrideType.ROLE) && checkDenyPerm(channel.permissionOverwrites[id].deny)) {
 						deniedRoles.push(guild.roles[id]);
 						if (guild.roles[id] && guild.roles[id].name == "@everyone") everyoneDenied = true;
 					}
-					else if ((channel.permissionOverwrites[id].type == hiddenchannelslib.DiscordConstants.PermissionOverrideType.MEMBER || overrideTypes[channel.permissionOverwrites[id].type] == hiddenchannelslib.DiscordConstants.PermissionOverrideType.MEMBER) && checkDenyPerm(channel.permissionOverwrites[id].deny)) {
+					else if ((channel.permissionOverwrites[id].type == ok_HiddenLib.DiscordConstants.PermissionOverrideType.MEMBER || overrideTypes[channel.permissionOverwrites[id].type] == ok_HiddenLib.DiscordConstants.PermissionOverrideType.MEMBER) && checkDenyPerm(channel.permissionOverwrites[id].deny)) {
 						addUser(id, deniedUsers);
 					}
 				}
 				
 				if (![].concat(allowedUsers, deniedUsers).find(user => user.id == guild.ownerId)) addUser(guild.ownerId, allowedUsers);
-				for (let id in guild.roles) if ((guild.roles[id].permissions | hiddenchannelslib.DiscordConstants.Permissions.ADMINISTRATOR) == guild.roles[id].permissions && ![].concat(allowedRoles, deniedRoles).find(role => role.id == id)) allowedRoles.push(Object.assign({overwritten: myMember && myMember.roles.includes(id) && !allowed}, guild.roles[id]));
+				for (let id in guild.roles) if ((guild.roles[id].permissions | ok_HiddenLib.DiscordConstants.Permissions.ADMINISTRATOR) == guild.roles[id].permissions && ![].concat(allowedRoles, deniedRoles).find(role => role.id == id)) allowedRoles.push(Object.assign({overwritten: myMember && myMember.roles.includes(id) && !allowed}, guild.roles[id]));
 				if (allowed && !everyoneDenied) allowedRoles.push({name: "@everyone"});
 				
 				let allowedElements = [], deniedElements = [];
-				for (let role of allowedRoles) allowedElements.push(hiddenchannelslib.ReactUtils.createElement(RoleRowComponent, {role: role, guildId: guild.id, channelId: channel.id}));
-				for (let user of allowedUsers) allowedElements.push(hiddenchannelslib.ReactUtils.createElement(UserRowComponent, {user: user, guildId: guild.id, channelId: channel.id}));
-				for (let role of deniedRoles) deniedElements.push(hiddenchannelslib.ReactUtils.createElement(RoleRowComponent, {role: role, guildId: guild.id, channelId: channel.id}));
-				for (let user of deniedUsers) deniedElements.push(hiddenchannelslib.ReactUtils.createElement(UserRowComponent, {user: user, guildId: guild.id, channelId: channel.id}));
+				for (let role of allowedRoles) allowedElements.push(ok_HiddenLib.ReactUtils.createElement(RoleRowComponent, {role: role, guildId: guild.id, channelId: channel.id}));
+				for (let user of allowedUsers) allowedElements.push(ok_HiddenLib.ReactUtils.createElement(UserRowComponent, {user: user, guildId: guild.id, channelId: channel.id}));
+				for (let role of deniedRoles) deniedElements.push(ok_HiddenLib.ReactUtils.createElement(RoleRowComponent, {role: role, guildId: guild.id, channelId: channel.id}));
+				for (let user of deniedUsers) deniedElements.push(ok_HiddenLib.ReactUtils.createElement(UserRowComponent, {user: user, guildId: guild.id, channelId: channel.id}));
 				
 				const infoStrings = [
 					isThread && {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.THREAD_NAME,
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.THREAD_NAME,
 						text: channel.name
 					}, !isThread && {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_NAME,
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_NAME,
 						text: channel.name
-					}, channel.type == hiddenchannelslib.DiscordConstants.ChannelTypes.GUILD_VOICE ? {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.FORM_LABEL_BITRATE,
+					}, channel.type == ok_HiddenLib.DiscordConstants.ChannelTypes.GUILD_VOICE ? {
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.FORM_LABEL_BITRATE,
 						text: channel.bitrate || "---"
 					} : {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_TOPIC,
-						text: hiddenchannelslib.ReactUtils.markdownParse(channel.topic || "---")
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_TOPIC,
+						text: ok_HiddenLib.ReactUtils.markdownParse(channel.topic || "---")
 					}, {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.CHANNEL_TYPE,
-						text: hiddenchannelslib.LanguageUtils.LanguageStrings[typeNameMap[hiddenchannelslib.DiscordConstants.ChannelTypes[channel.type]]]
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.CHANNEL_TYPE,
+						text: ok_HiddenLib.LanguageUtils.LanguageStrings[typeNameMap[ok_HiddenLib.DiscordConstants.ChannelTypes[channel.type]]]
 					}, isThread && parentChannel && {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_NAME,
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.FORM_LABEL_CHANNEL_NAME,
 						text: parentChannel.name
 					}, {
-						title: hiddenchannelslib.LanguageUtils.LanguageStrings.CATEGORY_NAME,
-						text: category && category.name || hiddenchannelslib.LanguageUtils.LanguageStrings.NO_CATEGORY
+						title: ok_HiddenLib.LanguageUtils.LanguageStrings.CATEGORY_NAME,
+						text: category && category.name || ok_HiddenLib.LanguageUtils.LanguageStrings.NO_CATEGORY
 					}
 				].map((formLabel, i) => formLabel && [
-					i == 0 ? null : hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.FormComponents.FormDivider, {
-						className: hiddenchannelslib.disCN.marginbottom20
+					i == 0 ? null : ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.FormComponents.FormDivider, {
+						className: ok_HiddenLib.disCN.marginbottom20
 					}),
-					hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.FormComponents.FormItem, {
+					ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.FormComponents.FormItem, {
 						title: `${formLabel.title}:`,
-						className: hiddenchannelslib.DOMUtils.formatClassName(hiddenchannelslib.disCN.marginbottom20, i == 0 && hiddenchannelslib.disCN.margintop8),
-						children: hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.FormComponents.FormText, {
-							className: hiddenchannelslib.disCN.marginleft8,
+						className: ok_HiddenLib.DOMUtils.formatClassName(ok_HiddenLib.disCN.marginbottom20, i == 0 && ok_HiddenLib.disCN.margintop8),
+						children: ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.FormComponents.FormText, {
+							className: ok_HiddenLib.disCN.marginleft8,
 							children: formLabel.text
 						})
 					})
 				]).flat(10).filter(n => n);
 
-				hiddenchannelslib.ModalUtils.open(this, {
+				ok_HiddenLib.ModalUtils.open(this, {
 					size: "MEDIUM",
-					header: hiddenchannelslib.LanguageUtils.LanguageStrings.CHANNEL + " " + hiddenchannelslib.LanguageUtils.LanguageStrings.ACCESSIBILITY,
+					header: ok_HiddenLib.LanguageUtils.LanguageStrings.CHANNEL + " " + ok_HiddenLib.LanguageUtils.LanguageStrings.ACCESSIBILITY,
 					subHeader: "#" + channel.name,
-					className: hiddenchannelslib.disCN._hiddenchannelsaccessmodal,
-					contentClassName: hiddenchannelslib.DOMUtils.formatClassName(!isThread && hiddenchannelslib.disCN.listscroller),
+					className: ok_HiddenLib.disCN._showhiddenchannelsaccessmodal,
+					contentClassName: ok_HiddenLib.DOMUtils.formatClassName(!isThread && ok_HiddenLib.disCN.listscroller),
 					onOpen: modalInstance => {if (modalInstance) accessModal = modalInstance;},
 					children: isThread ? infoStrings : [
-						hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.ModalComponents.ModalTabContent, {
-							className: hiddenchannelslib.disCN.modalsubinner,
-							tab: hiddenchannelslib.LanguageUtils.LanguageStrings.OVERLAY_SETTINGS_GENERAL_TAB,
+						ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.ModalComponents.ModalTabContent, {
+							className: ok_HiddenLib.disCN.modalsubinner,
+							tab: ok_HiddenLib.LanguageUtils.LanguageStrings.OVERLAY_SETTINGS_GENERAL_TAB,
 							children: infoStrings
 						}),
-						hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.ModalComponents.ModalTabContent, {
+						ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.ModalComponents.ModalTabContent, {
 							tab: this.labels.modal_allowed,
 							children: allowedElements.length ? allowedElements :
-								hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.MessagesPopoutComponents.EmptyStateBottom, {
-									msg: hiddenchannelslib.LanguageUtils.LanguageStrings.AUTOCOMPLETE_NO_RESULTS_HEADER,
+								ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.MessagesPopoutComponents.EmptyStateBottom, {
+									msg: ok_HiddenLib.LanguageUtils.LanguageStrings.AUTOCOMPLETE_NO_RESULTS_HEADER,
 									image: lightTheme ? "/assets/9b0d90147f7fab54f00dd193fe7f85cd.svg" : "/assets/308e587f3a68412f137f7317206e92c2.svg"
 								})
 						}),
-						hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.ModalComponents.ModalTabContent, {
+						ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.ModalComponents.ModalTabContent, {
 							tab: this.labels.modal_denied,
 							children: deniedElements.length ? deniedElements :
-								hiddenchannelslib.ReactUtils.createElement(hiddenchannelslib.LibraryComponents.MessagesPopoutComponents.EmptyStateBottom, {
-									msg: hiddenchannelslib.LanguageUtils.LanguageStrings.AUTOCOMPLETE_NO_RESULTS_HEADER,
+								ok_HiddenLib.ReactUtils.createElement(ok_HiddenLib.LibraryComponents.MessagesPopoutComponents.EmptyStateBottom, {
+									msg: ok_HiddenLib.LanguageUtils.LanguageStrings.AUTOCOMPLETE_NO_RESULTS_HEADER,
 									image: lightTheme ? "/assets/9b0d90147f7fab54f00dd193fe7f85cd.svg" : "/assets/308e587f3a68412f137f7317206e92c2.svg"
 								})
 						})
@@ -598,7 +597,7 @@
 			}
 
 			setLabelsByLanguage () {
-				switch (hiddenchannelslib.LanguageUtils.getLanguage().id) {
+				switch (ok_HiddenLib.LanguageUtils.getLanguage().id) {
 					case "bg":		// Bulgarian
 						return {
 							context_changeorder:				"Промяна на реда на скритите канали",
@@ -892,5 +891,5 @@
 				}
 			}
 		};
-	})(window.hiddenchannelslib_Global.PluginUtils.buildPlugin(config));
+	})(window.ok_HiddenLib_Global.PluginUtils.buildPlugin(config));
 })();
